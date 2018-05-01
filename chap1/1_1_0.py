@@ -1,7 +1,7 @@
 #coding:utf-8
 
 import numpy as np
-from pylab import *
+import matplotlib.pyplot as plt
 
 # 訓練データの数
 N = 10
@@ -21,8 +21,8 @@ xs = np.linspace(0, 1, 1000)    # sinは連続関数なのでxを細かくとる
 ideal = np.sin(2 * np.pi * xs)  # xsに対応するsinを求める
 
 # 訓練データとオリジナルのsinデータをプロット
-plot(xlist, tlist, 'bo')        # 訓練データを青い（b）の点（o）で描画
-plot(xs, ideal, 'g-')           # sin曲線を緑（g）の線（-）で描画
-xlim(0.0, 1.0)                  # X軸の範囲
-ylim(-1.5, 1.5)                 # Y軸の範囲
-show()                          # グラフを表示
+plt.plot(xlist, tlist, 'bo')        # 訓練データを青い（b）の点（o）で描画
+plt.plot(xs, ideal, 'g-')           # sin曲線を緑（g）の線（-）で描画
+plt.xlim(0.0, 1.0)                  # X軸の範囲
+plt.ylim(-1.5, 1.5)                 # Y軸の範囲
+plt.show()                          # グラフを表示

@@ -1,9 +1,12 @@
 #coding:utf-8
 
-import numpy as np
+
 import sys
 
-from pylab import *
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 # M次多項式近似
 M =6
 def y(x, wlist):
@@ -15,20 +18,16 @@ def y(x, wlist):
 
 # 訓練データからパラメータを推定
 def estimate(xlist, tlist):
-    # M次多項式のときはM+1個のパラメータがある
-    A = []
-    for i in range(M+1):
-        for j in range(M+1):
-            temp = (xlist**(i+j)).sum()
-            A.append(temp)
+    #(1.123)のAij式
+    A = np.zeros((M+1, M+1))
+    for i in range(M + 1):
+        for j in range(M + 1):
+            A[i,j]=(xlist**(i+j)).sum()
     print A
-    C=array(A)
-    A = array(A).reshape(M+1, M+1)
-    print A
-    T = []
-    for i in range(M+1):
-        T.append(((xlist**i) * tlist).sum())
-    T = array(T)
+
+    # (1.123)のTi式
+    T = np.array([((xlist**i) * tlist).sum() for i in xrange(M + 1)])
+
     # パラメータwは線形連立方程式の解
     wlist = np.linalg.solve(A, T)
     return wlist
@@ -45,12 +44,12 @@ def example1():
     xs = np.linspace(0, 2.5, 500)
     ideal = np.sin(2*np.pi*xs)         # 理想曲線
     model = [y(x, wlist) for x in xs]  # 推定モデル
-    plot(xlist, tlist, 'bo')  # 訓練データ
-    plot(xs, ideal, 'g-')     # 理想曲線
-    plot(xs, model, 'r-')     # 推定モデル
-    xlim(0.0, 1.0)
-    ylim(-1.5, 1.5)
-    show()
+    plt.plot(xlist, tlist, 'bo')  # 訓練データ
+    plt.plot(xs, ideal, 'g-')     # 理想曲線
+    plt.plot(xs, model, 'r-')     # 推定モデル
+    plt.xlim(0.0, 1.0)
+    plt.ylim(-1.5, 1.5)
+    plt.show()
 
 if __name__ == "__main__":
     example1()
